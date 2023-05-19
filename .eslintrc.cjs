@@ -7,6 +7,7 @@ module.exports = {
   root: true,
   rules: {
     "async-ts/async-name": "warn",
+    "async-ts/require-await-in-async": "warn",
     "@typescript-eslint/naming-convention": [
       "error",
       {
