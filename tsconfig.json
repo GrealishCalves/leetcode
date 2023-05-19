@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "declarationMap": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "sourceMap": true,
+    "strict": true,
+    "strictFunctionTypes": false,
+    "target": "ES2021",
+    "outDir": "dist"
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist", ".vscode", "src/**/*.spec.ts"]
+}
