@@ -10,17 +10,12 @@ export interface Data {
 const apiUrl = "https://jsonplaceholder.typicode.com/todos/1";
 
 export async function fetchDataAsync(url: string): Promise<Data> {
-  const response = (await fetch(url)) as Response;
+  const response = await fetch(url);
   if (response.ok) {
-    const data = (await response.json()) as Data;
-    return data;
+    return (await response.json()) as Data;
   } else {
     throw new Error(url);
   }
-}
-
-export function processData(data: Data): Data {
-  return data;
 }
 
 export function handleError(error: unknown): void {
@@ -29,9 +24,8 @@ export function handleError(error: unknown): void {
 
 export async function executeAsync() {
   try {
-    const data: Data = await fetchDataAsync(apiUrl);
-    const processedData: Data = processData(data);
-    console.log("Data fetched successfully:", processedData);
+    const data = await fetchDataAsync(apiUrl);
+    console.log("Data fetched successfully:", data);
   } catch (error) {
     handleError(error);
   }
