@@ -1,6 +1,6 @@
-import fetch, { Response } from "node-fetch";
+import fetch from "node-fetch";
 
-export interface Todo {
+interface Todo {
   userId: number;
   id: number;
   title: string;
@@ -9,33 +9,33 @@ export interface Todo {
 
 const apiUrl = "https://jsonplaceholder.typicode.com/todos/1";
 
-export async function executeAsync(): Promise<void> {
-  try {
-    const todo: Todo = await fetchTodoAsync(apiUrl);
-    logSuccess(todo);
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      handleError(error);
-    }
+async function fetchTodo(): Promise<Todo> {
+  const response = await fetch(apiUrl);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch todo from ${apiUrl}`);
   }
+  return response.json() as Promise<Todo>;
 }
 
-async function fetchTodoAsync(url: string): Promise<Todo> {
-  const response: Response = await fetch(url);
-
-  if (response.ok) {
-    return (await response.json()) as Todo;
-  } else {
-    throw new Error(url);
-  }
-}
-
-function handleError(error: Error): void {
-  console.error("Error fetching todo:", error.message);
-}
-
-function logSuccess(todo: Todo): void {
+function logSuccess(todo: Todo) {
   console.log("Todo fetched successfully:", todo);
 }
 
-void executeAsync();
+function logError(error: unknown) {
+  if (error instanceof Error) {
+    console.error("Error fetching todo:", error.message);
+    return;
+  }
+}
+
+async function main() {
+  try {
+    const todo = await fetchTodo();
+    logSuccess(todo);
+  } catch (error: unknown) {
+    logError(error);
+  }
+}
+
+void main();
+
