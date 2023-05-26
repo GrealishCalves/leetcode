@@ -9,7 +9,7 @@ interface Todo {
 
 const apiUrl = "https://jsonplaceholder.typicode.com/todos/1";
 
-async function fetchTodo(): Promise<Todo> {
+async function fetchTodoAsync(): Promise<Todo> {
   const response = await fetch(apiUrl);
   if (!response.ok) {
     throw new Error(`Failed to fetch todo from ${apiUrl}`);
@@ -28,14 +28,14 @@ function logError(error: unknown) {
   }
 }
 
-async function main() {
+async function mainAsync() {
   try {
-    const todo = await fetchTodo();
+    const todo = await fetchTodoAsync();
     logSuccess(todo);
   } catch (error: unknown) {
     logError(error);
   }
 }
 
-void main();
+void mainAsync();
 
