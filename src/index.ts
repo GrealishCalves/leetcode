@@ -32,7 +32,7 @@ function logError(error: unknown) {
   }
 }
 
-async function mainAsync() {
+async function mainAsync(): Promise<void> {
   try {
     const todo = await fetchTodoAsync();
     logSuccess(todo);
