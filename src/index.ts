@@ -14,7 +14,11 @@ async function fetchTodoAsync(): Promise<Todo> {
   if (!response.ok) {
     throw new Error(`Failed to fetch todo from ${apiUrl}`);
   }
-  return response.json() as Promise<Todo>;
+  const todo = await response.json();
+  if (!todo || typeof todo !== "object") {
+    throw new Error(`Invalid todo data: ${JSON.stringify(todo)}`);
+  }
+  return todo as Todo;
 }
 
 function logSuccess(todo: Todo) {
@@ -38,4 +42,3 @@ async function mainAsync() {
 }
 
 void mainAsync();
-
