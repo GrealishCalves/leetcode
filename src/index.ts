@@ -14,11 +14,11 @@ async function fetchTodoAsync(): Promise<Todo> {
   if (!response.ok) {
     throw new Error(`Failed to fetch todo from ${apiUrl}`);
   }
-  const todo = await response.json();
-  if (!todo || typeof todo !== "object") {
-    throw new Error(`Invalid todo data: ${JSON.stringify(todo)}`);
+  const todo = (await response.json()) as Todo;
+  if (!todo) {
+    throw new Error(`Invalid todo data: ${todo}`);
   }
-  return todo as Todo;
+  return todo;
 }
 
 function logSuccess(todo: Todo) {
@@ -28,7 +28,6 @@ function logSuccess(todo: Todo) {
 function logError(error: unknown) {
   if (error instanceof Error) {
     console.error("Error fetching todo:", error.message);
-    return;
   }
 }
 
