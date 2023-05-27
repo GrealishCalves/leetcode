@@ -21,11 +21,11 @@ async function fetchTodoAsync(): Promise<Todo> {
   return todo;
 }
 
-function logSuccess(todo: Todo) {
+function logSuccess(todo: Todo): void {
   console.log("Todo fetched successfully:", todo);
 }
 
-function logError(error: unknown) {
+function logError(error: unknown): void {
   if (error instanceof Error) {
     console.error("Error fetching todo:", error.message);
   }
@@ -35,7 +35,7 @@ async function mainAsync(): Promise<void> {
   try {
     const todo = await fetchTodoAsync();
     logSuccess(todo);
-  } catch (error: unknown) {
+  } catch (error) {
     logError(error);
   }
 }
