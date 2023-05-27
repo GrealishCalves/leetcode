@@ -9,7 +9,8 @@
     "clean": "rm -rf dist",
     "start:dev": "ts-node --esm src/index.ts",
     "start:prod": "node dist/index.js",
-    "update": "npm-check-updates && ncu -u && npm install"
+    "update": "npm-check-updates && ncu -u && npm install",
+    "commit": "git add . && aicommits --type conventional"
   },
   "author": "",
   "license": "ISC",
