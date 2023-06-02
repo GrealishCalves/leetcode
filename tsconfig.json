@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "Node16",
     "skipLibCheck": true,
     "sourceMap": true,
     "outDir": "./dist",
