@@ -1,43 +1,56 @@
-import fetch from "node-fetch";
+import { properties } from "./data";
 
-interface Todo {
-  userId: number;
-  id: number;
-  title: string;
-  completed: boolean;
-}
+function formatPropertiesRecursively(properties: Record<string, any>): Record<string, any> {
+  const formattedProps: Record<string, any> = {};
 
-const apiUrl = "https://jsonplaceholder.typicode.com/todos/1";
+  for (const key of Object.keys(properties)) {
+    const value = properties[key];
 
-async function fetchTodoAsync(): Promise<Todo> {
-  const response = await fetch(apiUrl);
-  if (!response.ok) {
-    throw new Error(`Failed to fetch todo from ${apiUrl}`);
+    if (value.properties) {
+      formattedProps[key] = {
+        ...value,
+        properties: formatPropertiesRecursively(value.properties),
+      };
+    } else {
+      formattedProps[key] = `{{${key}}}`;
+    }
   }
-  const todo = (await response.json()) as Todo;
-  if (!todo) {
-    throw new Error(`Invalid todo data: ${todo}`);
+
+  return formattedProps;
+}
+
+function formatPropertiesRecursively2(properties: Record<string, any>): Record<string, any> {
+  const formattedProps: Record<string, any> = {};
+
+  for (const [key, value] of Object.entries(properties)) {
+    if (value.properties) {
+      formattedProps[key] = {
+        ...value,
+        properties: formatPropertiesRecursively(value.properties),
+      };
+    } else {
+      formattedProps[key] = `{{${key}}}`;
+    }
   }
-  return todo;
+
+  return formattedProps;
 }
 
-function logSuccess(todo: Todo): void {
-  console.log("Todo fetched successfully:", todo);
-}
+// console.log(JSON.stringify(formatPropertiesRecursively(properties), null, 2));
 
-function logError(error: unknown): void {
-  if (error instanceof Error) {
-    console.error("Error fetching todo:", error.message);
-  }
-}
+// Measure execution time of formatPropertiesRecursively
+const start1 = performance.now();
+const result1 = formatPropertiesRecursively(properties);
+const end1 = performance.now();
+const executionTime1 = end1 - start1;
 
-async function mainAsync(): Promise<void> {
-  try {
-    const todo = await fetchTodoAsync();
-    logSuccess(todo);
-  } catch (error) {
-    logError(error);
-  }
-}
+// Measure execution time of formatPropertiesRecursively2
+const start2 = performance.now();
+const result2 = formatPropertiesRecursively2(properties);
+const end2 = performance.now();
+const executionTime2 = end2 - start2;
 
-void mainAsync();
+// Output the results and execution times
+console.log("Execution time 1:", executionTime1, "ms");
+
+console.log("Execution time 2:", executionTime2, "ms");
