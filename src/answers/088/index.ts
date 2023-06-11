@@ -8,8 +8,8 @@ function merge(nums1: number[], m: number, nums2: number[], n: number): number[]
 
   // While there are still elements to place
   while (p1 >= 0 || p2 >= 0) {
-    let val1 = p1 >= 0 ? nums1[p1] : -Infinity;
-    let val2 = p2 >= 0 ? nums2[p2] : -Infinity;
+    const val1 = p1 >= 0 ? nums1[p1] : -Infinity;
+    const val2 = p2 >= 0 ? nums2[p2] : -Infinity;
 
     // Place the larger of the two values in its position
     if (val1 > val2) {
